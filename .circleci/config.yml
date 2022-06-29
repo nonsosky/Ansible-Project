@@ -23,7 +23,7 @@ jobs:
                  # ansible-playbook main-remote.yml -i inventory.txt
 
    commands:
-   # Exercise - Rollback
+       # Exercise - Rollback
        destroy_environment:
            steps:
              - run:
@@ -81,5 +81,5 @@ jobs:
 workflows:
   my_workflow:
       jobs:
-        - configure_infrastructure
+        - create_infrastructures
         - smoke_test
