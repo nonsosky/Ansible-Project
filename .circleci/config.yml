@@ -22,7 +22,7 @@ jobs:
               # command: |
                  # ansible-playbook main-remote.yml -i inventory.txt
 
-   commands:
+   command:
        # Exercise - Rollback
        destroy_environment:
            steps:
