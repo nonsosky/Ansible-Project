@@ -67,7 +67,7 @@ jobs:
                       --region us-east-1
             - run: return 1
             - destroy_environment
-              when: on_fail
+                when: on_fail
    
    #create_infrastructures: 
       #docker:
@@ -83,15 +83,15 @@ jobs:
         #        --region us-east-1
 
    # Exercise: Smoke Testing
-   #smoke_test:
-     # docker:
-     #   - image: alpine:latest
-     # steps:
-     #   - run:
-       #     name: Test job
+   smoke_test:
+      docker:
+        - image: alpine:latest
+      steps:
+        - run:
+            name: Test job
                # Fail the job intentionally to simulate an error.
-       #     command:  return 1
-       # - destroy_environment  
+            command:  return 1
+        - destroy_environment  
 
 # Invoke jobs via workflowsSy
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -99,4 +99,4 @@ workflows:
   my_workflow:
       jobs:
         - create_infrastructure
-        #- smoke_test
+        - smoke_test
