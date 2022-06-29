@@ -5,22 +5,39 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-   configure_infrastructure: 
-       docker:
-           - image: python:3.7-alpine3.11
-       steps:
-           - checkout
-           - add_ssh_keys:
+   # configure_infrastructure: 
+       #docker:
+           #- image: python:3.7-alpine3.11
+       #steps:
+           #- checkout
+          # - add_ssh_keys:
                 # You can get this ID in the section where you registered the SSH Key
-                fingerprints: ["37:41:42:a2:68:a2:d9:e9:dd:6e:34:c2:f0:79:db:24"] 
+                #fingerprints: ["37:41:42:a2:68:a2:d9:e9:dd:6e:34:c2:f0:79:db:24"] 
+          # - run:
+           #    name: Install Ansible
+              # command: |
+               #  apk add --update ansible
+          # - run:
+               #name: Run Playbook and Configure server
+              # command: |
+                 # ansible-playbook main-remote.yml -i inventory.txt
+
+   smoke_test:
+       docker:
+           - image: alpine:latest
+       steps:
+           - run: apk add --update curl
            - run:
-               name: Install Ansible
+               name: smoke test
                command: |
-                 apk add --update ansible
-           - run:
-               name: Run Playbook and Configure server
-               command: |
-                 ansible-playbook main-remote.yml -i inventory.txt
+                 URL="https://blog.udacity.com/"
+                 # Test if website exists
+                 if curl -s --head ${URL} 
+                 then
+                   return 0
+                 else
+                   return 1
+                 fi
   #create_infrastructures: 
    #   docker:
     #    - image: amazon/aws-cli
@@ -40,4 +57,5 @@ jobs:
 workflows:
   my_workflow:
       jobs:
-        - configure_infrastructure
+        - smoke_test
+       # - configure_infrastructure
